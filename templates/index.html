@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Amazon Scraper</title>
+    <style>
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        #results ul {
+            list-style: none;
+        }
+        #loading {
+            display: none;
+            color: blue;
+            margin-top: 5px;
+        }
+        #results {
+            display: none;
+        }
+    </style>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("results").style.display = "none";
+
+            var formData = new FormData(document.getElementById("urlForm"));
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/analyze", true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("loading").style.display = "none";
+
+                    var resultArea = document.getElementById("results");
+                    resultArea.style.display = "block";
+                    resultArea.innerHTML = '';
+                    var ul = document.createElement('ul');
+                    
+                    var response = JSON.parse(xhr.responseText);
+                    response.results.forEach(function(result) {
+                        var li = document.createElement("li");
+                        li.innerHTML = `<strong>URL:</strong> ${result.url} - ` +
+                                       (result.success ? `<span class="success">✔ OK</span>` 
+                                                       : `<span class="error">✘ ${result.status}</span>`);
+                        ul.appendChild(li);
+                    });
+
+                    resultArea.appendChild(ul);
+                }
+            };
+
+            xhr.send(formData);
+        }
+    </script>
+</head>
+<body>
+    <h1>Enter Amazon URLs to analyze</h1>
+    
+    <form id="urlForm" action="/analyze" method="POST" onsubmit="submitForm(event)">
+        <label for="url_input">List of URLs (one per line):</label><br>
+        <textarea id="url_input" name="url_input" rows="10" cols="50" required></textarea><br><br>
+        <input type="submit" value="Analyze">
+    </form>
+
+    <div id="loading">Processing... Please wait.</div>
+
+    <div id="results">
+        <h2>Results</h2>
+        <ul></ul>
+    </div>
+</body>
+</html>

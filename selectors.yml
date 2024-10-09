@@ -1,41 +1,33 @@
 name:
     css: '#productTitle'
     type: Text
-price:
-    css: '#price_inside_buybox'
+brand:
+    css: '#bylineInfo'
     type: Text
+price:
+    css: '.a-price span[aria-hidden="true"]'
+    type: Text
+originPrice:
+    css: 'span.aok-relative .aok-offscreen'
+discount:
+   css: 'span.savingsPercentage'
+   type: Text
 short_description:
-    css: '#featurebullets_feature_div'
+    css: '#featurebullets_feature_div li'
+    multiple: true
     type: Text
 images:
     css: '.imgTagWrapper img'
     type: Attribute
     attribute: data-a-dynamic-image
 rating:
-    css: span.arp-rating-out-of-text
-    type: Text
+    css: '#acrPopover'
+    type: Attribute
+    attribute: title
 number_of_reviews:
-    css: 'a.a-link-normal h2'
+    css: '#acrCustomerReviewText'
     type: Text
-variants:
-    css: 'form.a-section li'
+category:
+    css: 'ul.a-unordered-list.a-horizontal.a-size-small li a'
     multiple: true
     type: Text
-    children:
-        name:
-            css: ""
-            type: Attribute
-            attribute: title
-        asin:
-            css: ""
-            type: Attribute
-            attribute: data-defaultasin
-product_description:
-    css: '#productDescription'
-    type: Text
-sales_rank:
-    css: 'li#SalesRank'
-    type: Text
-link_to_all_reviews:
-    css: 'div.card-padding a.a-link-emphasis'
-    type: Link

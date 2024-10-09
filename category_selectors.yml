@@ -1,0 +1,4 @@
+links:
+    css: 'h2 a.a-link-normal'
+    type: Link
+    multiple: true
